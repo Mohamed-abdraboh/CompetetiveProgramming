@@ -1,0 +1,86 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+#define lp(i , n)		for(int i = 0; i < n; ++i)
+
+int n;
+char grid[30][30];
+vector<vector<bool>> visited;
+int di[] = { -1, 0, 1, 0, 1, -1, 1, -1 };
+int dj[] = { 0, 1, 0, -1, 1, -1, -1, 1 };
+
+bool valid(int i, int j) {
+	return (i < n && i >= 0 && j < n && j >= 0);
+}
+
+void dfs(int i, int j) {
+	visited[i][j] = true;
+
+	lp(m , 8)
+	{
+		int ni = i + di[m];
+		int nj = j + dj[m];
+
+		if (valid(ni, nj) && grid[ni][nj] == '1') {
+			if (!visited[ni][nj])
+				dfs(ni, nj);
+		}
+	}
+
+}
+
+int cntWarEagles() {
+	int cnt = 0;
+
+	lp(i , n)
+		lp(j , n)
+
+			if (!visited[i][j] && grid[i][j] == '1') {
+				dfs(i, j);
+				cnt++;
+			}
+
+	return cnt;
+}
+
+int main() {
+
+	int cnt = 1;
+	while (cin >> n) {
+
+		visited = vector<vector<bool>>(n, vector<bool>(n, 0));
+
+		lp(i , n)
+		{
+			scanf("%s", grid[i]);
+		}
+
+		cout << "Image number " << cnt++ << " contains " << cntWarEagles()
+				<< " war eagles.\n";
+
+	}
+	return 0;
+}
+/*
+ 6
+ 100100
+ 001010
+ 000000
+ 110000
+ 111000
+ 010100
+
+
+ 8
+ 01100101
+ 01000001
+ 00011000
+ 00000010
+ 11000011
+ 10100010
+ 10000001
+ 01100000
+
+
+ */
