@@ -1,0 +1,31 @@
+#include<iostream>
+#include<vector>
+#include<set>
+#include<bits/stdc++.h>
+using namespace std;
+
+#define lp(i,n)  for(int i=1; i<=n; ++i)
+
+const int MAX = 550;
+
+void printSpace(int n) {
+	lp(i,n)
+		cout << " ";
+}
+
+int main() {
+
+	int n, m, c;
+	while (cin >> n && n > 0) {
+		cin >> m >> c;
+
+		int rem = (c == 1 ? 1 : 0);
+
+		cout << ((n - 7) * (m - 7) + rem) / 2 << "\n";
+
+	}
+
+	return 0;
+}
+
+//17
