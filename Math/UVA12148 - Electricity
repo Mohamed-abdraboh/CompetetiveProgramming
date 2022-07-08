@@ -1,0 +1,51 @@
+#include<iostream>
+using namespace std;
+
+int M[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+bool f(int y1, int m1, int d1, int y2, int m2, int d2) {
+
+	if (--d2 == 0) {
+		if (--m2 == 0) {
+			m2 = 12;
+			y2--;
+		}
+
+		d2 = M[m2 - 1];
+
+		bool isLeap = (y2 % 4 == 0 && (y2 % 100 != 0 || y2 % 400 == 0));
+
+		if (m2 == 2 && isLeap)
+			d2 = 29;
+	}
+
+	return d1 == d2 && m1 == m2 && y1 == y2;
+}
+
+int main() {
+
+	int y1 = 0, m1 = 0, d1 = 0, e1 = 0, y2, m2, d2, e2;
+
+	int n;
+	while (cin >> n, n) {
+
+		int count = 0, con = 0;
+		while (n--) {
+			cin >> d2 >> m2 >> y2 >> e2;
+
+			if (f(y1, m1, d1, y2, m2, d2)){
+				con += e2 - e1, count++;
+			}
+
+			y1 = y2;
+			m1 = m2;
+			d1 = d2;
+			e1 = e2;
+
+		}
+
+		cout << count << " " << con << "\n";
+	}
+
+	return 0;
+}
