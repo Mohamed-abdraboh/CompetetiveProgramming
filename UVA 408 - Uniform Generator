@@ -1,0 +1,49 @@
+#include<iostream>
+#include<vector>
+#include<set>
+#include<bits/stdc++.h>
+using namespace std;
+
+#define lp(i,n)  for(int i=1; i<=n; ++i)
+
+const int MAX = 550;
+
+void printSpace(int n) {
+	lp(i,n)
+		cout << " ";
+}
+
+int main() {
+
+	int step, mod;
+
+	while (cin >> step) {
+		cin >> mod;
+
+		vector<bool> vis(mod);
+
+		int seed = 0;
+
+		while (vis[seed] != true) {
+			vis[seed] = true;
+			seed = (seed + step) % mod;
+
+		}
+
+		cout << setw(10) << step << setw(10) << mod;
+
+		bool g = true;
+		for (int i = 0; i < mod; ++i)
+			if (vis[i] == false) {
+				cout << "    Bad Choice\n\n";
+				g = false;
+				break;
+			}
+		if (g)
+			cout <<  "    Good Choice\n\n";
+
+	}
+	return 0;
+}
+
+//35
