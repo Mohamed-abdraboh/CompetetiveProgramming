@@ -1,0 +1,74 @@
+#include <iostream>
+#include<vector>
+using namespace std;
+
+#define lp(i , n)  for(int i = 0; i < n; ++i)
+
+int l, w;
+
+vector<string> route;
+char grid[10][10];
+vector<vector<bool>> vis;
+
+// u r l
+int di[] = { 0, 0, -1 };
+int dj[] = { 1, -1, 0 };
+
+string r[] = { "left", "forth", "right" };
+
+bool isValid(int i, int j) {
+	if (i >= 0 && j >= 0 && i < l && j < w)
+		for (auto val : "IEHOVA#")
+			if (grid[i][j] == val)
+				return true;
+	return false;
+}
+
+bool f = false;
+
+void dfs(int i, int j) {
+
+	vis[i][j] = true;
+
+	lp(m , 3)
+	{
+		int ni = i + di[m];
+		int nj = j + dj[m];
+
+		if (isValid(ni, nj) && !vis[ni][nj]) {
+			if (f)
+				cout << " ";
+			f = true;
+			cout << r[dj[m] + 1];
+			dfs(ni, nj);
+
+		}
+	}
+
+}
+
+int main() {
+
+	int n;
+	cin >> n;
+
+	while (n--) {
+// because spaces  see dfs.
+		f = false;
+
+		cin >> l >> w;
+		vis = vector<vector<bool>>(l, vector<bool>(w, 0));
+
+		lp(i , l)
+			scanf("%s", grid[i]);
+
+		lp(i , w)
+			if (grid[l - 1][i] == '@')
+				dfs(l - 1, i);
+
+		cout << "\n";
+
+	}
+	return 0;
+}
+// 10:00
