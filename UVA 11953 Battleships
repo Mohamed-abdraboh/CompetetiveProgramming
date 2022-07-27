@@ -1,82 +1,73 @@
-#include<iostream>
+#include <iostream>
 #include<vector>
+#include<cmath>
+#include<algorithm>
 using namespace std;
 
-#define lp(i , n)		for(int i = 0; i < n; ++i)
+#define lp(i , n)  for(int i = 0; i < n; ++i)
+#define rep(i , v)  for(int i = 0; i <(int)v.size(); ++i)
+
+//          u ur r dr d dl l lu
+int di[] = { -1, 1, 0, 0 };
+int dj[] = { 0, 0, 1, -1 };
 
 int n;
 char grid[101][101];
-vector<vector<bool>> visited;
-int di[] = { -1, 0, 1, 0, 1, -1, 1, -1 };
-int dj[] = { 0, 1, 0, -1, 1, -1, -1, 1 };
+vector<vector<bool>> vis;
 
-bool isValid(int i, int j) {
-	return (i >= 0 && i < n && j >= 0 && j < n);
+bool valid(int i, int j) {
+	return i >= 0 && j >= 0 && i < n && j < n;
 }
 
-vector<string> res;
-bool fin = false;
 void dfs(int i, int j) {
+	vis[i][j] = true;
 
-	visited[i][j] = true;
-
-	lp(m , 8)
+	lp(m , 4)
 	{
 		int ni = i + di[m];
 		int nj = j + dj[m];
 
-		if ((isValid(ni, nj)) && !(visited[ni][nj])
-				&& (grid[ni][nj] == 'x' || grid[ni][nj] == '@')) {
-			dfs(ni, nj);
-		}
+		if (valid(ni, nj) && grid[ni][nj] != '.')
+			if (!vis[ni][nj])
+				dfs(ni, nj);
+
 	}
 
 }
 
-int cntShips() {
+int shipsCnt() {
 	int cnt = 0;
-	lp(i , n)
+
+	lp(i, n)
 		lp(j , n)
-			if (grid[i][j] == 'x' && !visited[i][j]) {
+		{
+			if (grid[i][j] == 'x' && !vis[i][j]) {
 				dfs(i, j);
 				cnt++;
 			}
+		}
 	return cnt;
 }
 
 int main() {
-	int op = 1;
 	int t;
 	cin >> t;
-	while (t--) {
-		cin >> n;
-		visited = vector<vector<bool>>(n, vector<bool>(n, 0));
-		lp(i , n)
-			scanf("%s", grid[i]);
 
-		cout << "Case " << op++ << ": " << cntShips() << "\n";
+	lp(j , t)
+	{
+
+		cin >> n;
+
+		vis = vector<vector<bool>>(n, vector<bool>(n, 0));
+
+		lp(i, n)
+		{
+			scanf("%s", grid[i]);
+		}
+
+		printf("Case %d: %d\n", j + 1, shipsCnt());
 
 	}
-
 	return 0;
 }
-/*
- 2
- 4
- x...
- ..x.
- @.@.
- ....
-
- 2
- ..
- x.
-
-
- 1
- 4
- X...
- x...
- @.x.
- ....
- */
+// 01 : 03
