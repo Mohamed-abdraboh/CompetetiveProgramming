@@ -1,0 +1,93 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define lp(i , n)  for(int i = 0; i<n; ++i)
+#define cyan  ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+#define EPS 1e-10
+#define ll long long
+
+int lines(int n, int k) {
+	int sum = n;
+	while (n > 0) {
+
+		n /= k;
+		sum += n;
+	}
+	return sum;
+}
+
+int minV(int n, int k) {
+	int st = k, end = n;
+
+	while (st < end) {
+
+		int mid = (st + end) / 2;
+		int sum = lines(mid, k);
+
+		if (sum == n)
+			return mid;
+		else if (sum < n)
+			st = mid + 1;
+		else
+			end = mid;
+	}
+	return st;
+}
+
+const int MAX = 1e5 + 5;
+
+int arr[MAX];
+
+bool valid(int n, int c, int d) {
+	int k = arr[0];
+	c--;
+	for (int i = 1; i < n; ++i) {
+		if (arr[i] >= k + d) {
+			k = arr[i];
+			c--;
+		}
+	}
+	if (c > 0)
+		return false;
+	return true;
+}
+
+int largestDistance(int n, int c) {
+	int st = 1, en = 1e9 + 7;
+
+	while (st < en) {
+		int mid = st + (en - st + 1) / 2;
+
+		if (valid(n, c, mid))
+			st = mid;
+		else
+			en = mid - 1;
+
+	}
+	return st;
+}
+
+int main() {
+
+	cyan
+
+	int t, n, c;
+	cin >> t;
+
+	while (t--) {
+		cin >> n >> c;
+		lp(i, n)
+			cin >> arr[i];
+
+		sort(arr, arr + n);
+		cout << largestDistance(n, c) << "\n";
+
+	}
+	return 0;
+}
+/*	4
+ 1 4 5  7
+ 8
+
+ 6 8 10
+ */
