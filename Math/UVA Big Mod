@@ -1,0 +1,101 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define lp(i , n)  for(int i = 0; i<n; ++i)
+#define cyan  ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+#define EPS 1e-10
+#define ll long long
+
+int fib(int n) {
+
+	if (n <= 2)
+		return n - 1;
+
+	return fib(n - 1) + fib(n - 2);
+}
+
+int iterativeFib(int n) {
+	int a = 0, b = 1;
+
+	for (int i = 3; i <= n; ++i) {
+		int tmp = b;
+		b = a + b;
+		a = tmp;
+	}
+	return b;
+}
+
+int gcd(int a, int b) {
+
+	if (b == 0)
+		return a;
+
+	return gcd(b, a % b);
+
+}
+
+int lcm(int a, int b) {
+	return a * b / gcd(a, b);
+}
+
+int pow(int b, int p) {
+
+	if (p == 0)
+		return 1;
+
+	ll sq = pow(b, p / 2);
+
+	sq = sq * sq;
+
+	if (p % 2 == 1)
+		sq *= b;
+
+	return sq;
+
+}
+
+// a^1 + a^2 + a^3 + a^4 + a^5 + a^6
+// a^1 + a^2 + a^3 + a^3(a^1 + a^2 + a^3)
+// (a^1 + a^2 + a^3)(1 + a^3)
+// (a^1 + a^2 + a^3)(1 + a^1 + a^2 + a^3 - a^1 -a^2)
+
+ll sumPows(ll a, int k) {
+
+	if (k == 0)
+		return 0;
+
+	if (k % 2 == 1)
+		return a * (1 + sumPows(a, k - 1));
+
+	ll half = sumPows(a, k / 2);
+
+	return half * (1 + half - sumPows(a, (k / 2) - 1));
+}
+
+ll bigMod(ll a, ll b, ll m) {
+
+	if (b == 0)
+		return 1;
+
+	ll sq = bigMod(a, b / 2, m);
+
+	sq = (sq * sq) % m;
+
+	if (b % 2 == 1)
+		sq = (sq * a) % m;
+
+	return sq % m;
+}
+
+int main() {
+//	cyan
+
+	int a, b, m;
+	while (cin >> a >> b >> m)
+		cout << bigMod(a, b, m) << endl;
+
+	return 0;
+}
+/*
+ 7:24
+ */
