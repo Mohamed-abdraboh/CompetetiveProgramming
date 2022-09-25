@@ -1,0 +1,41 @@
+#include<iostream>
+#include<sstream>
+#include<algorithm>
+#include<stack>
+#include<queue>
+#include<vector>
+using namespace std;
+#define cyan  ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+
+int main() {
+//	cyan
+
+	int t;
+	cin >> t;
+	while (t--) {
+		string str;
+		cin >> str;
+		stack<int> st;
+
+		for (char c : str) {
+
+			if (c == ')') {
+				while (st.top() != '(') {
+					cout << (char) st.top();
+					st.pop();
+
+				}
+				st.pop();
+			}
+
+			else if ((c <= 'z' && c >= 'a') || (c <= 'Z' && c >= 'A'))
+				cout << c;
+			else
+				st.push(c);
+
+		}
+
+		cout << "\n";
+	}
+	return 0;
+}
