@@ -1,0 +1,51 @@
+#include<iostream>
+#include<sstream>
+#include<algorithm>
+#include<stack>
+#include<queue>
+#include<vector>
+using namespace std;
+#define cyan  ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+
+int main() {
+//	cyan
+
+	int n;
+	while (cin >> n && n != 0) {
+
+		vector<string> v(n);
+		vector<int> spaces(n);
+
+		cin.ignore();
+		for (int i = 0; i < n; ++i)
+			getline(cin,v[i]);
+
+		for (int i = 0; i < n; ++i) {
+			int cnt = 0;
+
+			for (char c : v[i])
+				if (c == 'X')
+					cnt++;
+
+			spaces[i] = v[i].size() - cnt;
+		}
+
+
+		sort(spaces.begin(), spaces.end());
+
+		int to_remove = spaces[0];
+
+
+		for (int i = 1; i < (int) spaces.size(); ++i) {
+			spaces[i] -= to_remove;
+		}
+
+		int res = 0;
+		for (int i = 1; i < (int) spaces.size(); ++i)
+			res += spaces[i];
+
+		cout << res << "\n";
+	}
+
+	return 0;
+}
