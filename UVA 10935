@@ -1,0 +1,61 @@
+#include<iostream>
+#include<sstream>
+#include<algorithm>
+#include<stack>
+#include<queue>
+#include<vector>
+using namespace std;
+#define cyan  ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+
+vector<int> v;
+
+bool inc(int n) {
+
+	for (int i = 1; i < n; ++i)
+		if (v[i - 1] > v[i])
+			return false;
+
+	return true;
+}
+
+bool dec(int n) {
+
+	for (int i = 1; i < n; ++i)
+		if (v[i - 1] < v[i])
+			return false;
+
+	return true;
+}
+
+int main() {
+	cyan
+	int n;
+
+	while (cin >> n && n != 0) {
+		queue<int> q;
+
+		if (n == 1) {
+			cout << "Discarded cards:\nRemaining card: 1\n";
+			continue;
+		}
+
+		for (int i = 1; i <= n; ++i)
+			q.push(i);
+
+		cout << "Discarded cards: ";
+		bool comma = false;
+		while (q.size() > 1) {
+			if (comma)
+				cout << ", ";
+			comma = true;
+			cout << q.front();
+			q.pop();
+			q.push(q.front());
+			q.pop();
+		}
+		cout << "\n";
+		cout << "Remaining card: " << q.front() << "\n";
+	}
+
+	return 0;
+}
