@@ -1,0 +1,50 @@
+#include<iostream>
+#include<sstream>
+#include<algorithm>
+#include<stack>
+#include<queue>
+#include<vector>
+using namespace std;
+#define cyan  ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+
+int main() {
+	cyan
+
+	string str;
+	while (getline(cin, str) && str.size() > 0) {
+		deque<string> dq;
+
+		bool right = true;
+		string cur = "";
+		for (char c : str) {
+			if (c == '[') {
+				if (right)
+					dq.push_back(cur);
+				else
+					dq.push_front(cur);
+				right = false;
+				cur = "";
+			} else if (c == ']') {
+				if (right)
+					dq.push_back(cur);
+				else
+					dq.push_front(cur);
+				right = true;
+				cur = "";
+			} else
+				cur += c;
+		}
+
+		if (right)
+			dq.push_back(cur);
+		else
+			dq.push_front(cur);
+
+		for (string s : dq)
+			cout << s;
+		cout << "\n";
+
+	}
+
+	return 0;
+}
