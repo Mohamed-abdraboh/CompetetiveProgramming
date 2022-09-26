@@ -1,0 +1,42 @@
+#include<iostream>
+#include<sstream>
+#include<algorithm>
+#include<stack>
+#include<queue>
+#include<vector>
+#include<bitset>
+#include<set>
+using namespace std;
+#define cyan  ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+
+int main() {
+//	cyan
+
+	int n;
+	while (cin >> n && n != 0) {
+
+		priority_queue<int> pq;
+
+		for (int i = 0; i < n; ++i) {
+			int x;
+			cin >> x;
+			pq.push(-x);
+		}
+
+		int cost = 0;
+
+		while (pq.size() > 1) {
+
+			int f = -pq.top();
+			pq.pop();
+			int s = -pq.top();
+			pq.pop();
+			int sum = f + s;
+			cost += sum;
+			pq.push(-sum);
+		}
+
+		cout << cost << "\n";
+	}
+	return 0;
+}
