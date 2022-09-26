@@ -1,0 +1,39 @@
+#include<iostream>
+#include<sstream>
+#include<algorithm>
+#include<stack>
+#include<queue>
+#include<vector>
+#include<bitset>
+using namespace std;
+#define cyan  ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+
+int main() {
+	cyan
+
+	int num;
+
+	while (cin >> num && num != 0) {
+
+		bitset<32> a(num);
+		bitset<32> f;
+		bitset<32> s;
+
+		bool turn = true;
+
+		for (int i = 0; i < (int) a.size(); ++i) {
+			if (a[i] == 1) {
+				if (turn) {
+					f[i] = 1;
+					turn = false;
+				} else {
+					s[i] = 1;
+					turn = true;
+				}
+			}
+		}
+
+		cout << f.to_ulong() << " " << s.to_ulong() << "\n";
+	}
+	return 0;
+}
