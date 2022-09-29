@@ -1,0 +1,76 @@
+#include<iostream>
+#include<sstream>
+#include<algorithm>
+#include<stack>
+#include<queue>
+#include<vector>
+#include<bitset>
+#include<set>
+#include<map>
+using namespace std;
+#define cyan  ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+
+int cntInv(int arr[], int len) {
+	int cnt = 0;
+	for (int i = 0; i < len; ++i)
+		for (int j = i + 1; j < len; ++j)
+			if (arr[j] < arr[i])
+				cnt++;
+
+	return cnt;
+}
+
+int merge(int arr[], int start, int mid, int end) {
+	int p = start, q = mid + 1;
+	int a[end - start + 1];
+	int k = 0;
+	int cnt = 0;
+	for (int i = start; i <= end; ++i) {
+		if (p > mid)
+			a[k++] = arr[q++];
+		else if (q > end)
+			a[k++] = arr[p++];
+		else if (arr[p] > arr[q])
+			a[k++] = arr[q++], cnt += mid - p + 1;
+		else
+			a[k++] = arr[p++];
+	}
+	for (int i = 0; i < k; ++i)
+		arr[start++] = a[i];
+	return cnt;
+}
+
+int cntMerge(int arr[], int start, int end) {
+	int cnt = 0;
+	if (start < end) {
+		int mid = (start + end) / 2;
+		cnt += cntMerge(arr, start, mid);
+		cnt += cntMerge(arr, mid + 1, end);
+
+		cnt += merge(arr, start, mid, end);
+
+	}
+	return cnt;
+}
+
+const int MX = 1e5 + 5;
+
+int main() {
+	cyan
+
+	int n;
+	while (cin >> n && n != 0) {
+		int arr[MX] = { 0 };
+
+		for (int i = 0; i < n; ++i)
+			cin >> arr[i];
+
+		int cnt = cntMerge(arr, 0, n - 1);
+
+		cout << (cnt % 2 == 0 ? "Carlos" : "Marcelo") << "\n";
+	}
+
+
+
+	return 0;
+}
