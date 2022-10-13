@@ -1,0 +1,199 @@
+#include<iostream>
+#include<sstream>
+#include<algorithm>
+#include<stack>
+#include<queue>
+#include<vector>
+#include<bitset>
+#include<set>
+#include<map>
+#include<assert.h>
+using namespace std;
+#define cyan  ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+
+//int cntInv(int arr[], int len) {
+//	int cnt = 0;
+//	for (int i = 0; i < len; ++i)
+//		for (int j = i + 1; j < len; ++j)
+//			if (arr[j] < arr[i])
+//				cnt++;
+//
+//	return cnt;
+//}
+//
+//int merge(int arr[], int start, int mid, int end) {
+//	int p = start, q = mid + 1;
+//	int a[end - start + 1];
+//	int k = 0;
+//	int cnt = 0;
+//	for (int i = start; i <= end; ++i) {
+//		if (p > mid)
+//			a[k++] = arr[q++];
+//		else if (q > end)
+//			a[k++] = arr[p++];
+//		else if (arr[p] > arr[q])
+//			a[k++] = arr[q++], cnt += mid - p + 1;
+//		else
+//			a[k++] = arr[p++];
+//	}
+//	for (int i = 0; i < k; ++i)
+//		arr[start++] = a[i];
+//	return cnt;
+//}
+//
+//int cntMerge(int arr[], int start, int end) {
+//	int cnt = 0;
+//	if (start < end) {
+//		int mid = (start + end) / 2;
+//		cnt += cntMerge(arr, start, mid);
+//		cnt += cntMerge(arr, mid + 1, end);
+//
+//		cnt += merge(arr, start, mid, end);
+//
+//	}
+//	return cnt;
+//}
+
+const int MAX = 1e6;
+
+void merge(int arr[], int start, int mid, int end) {
+
+	int p = start, q = mid + 1;
+	int k = 0;
+	int a[end - start + 1];
+
+	for (int i = start; i <= end; ++i) {
+
+		if (q > end)
+			a[k++] = arr[p++];
+		else if (p > mid)
+			a[k++] = arr[q++];
+		else if (arr[p] < arr[q])
+			a[k++] = arr[p++];
+		else if (arr[q] < arr[p])
+			a[k++] = arr[q++];
+	}
+
+	for (int i = 0; i < k; ++i)
+		arr[start++] = a[i];
+
+}
+
+void merge_sort(int arr[], int start, int end) {
+
+	if (start < end) {
+
+		int mid = (start + end) / 2;
+
+		merge_sort(arr, start, mid);
+		merge_sort(arr, mid + 1, end);
+
+		merge(arr, start, mid, end);
+
+	}
+
+}
+
+struct Node {
+	int data;
+	Node *next;
+
+	Node(int data) :
+			data(data), next(nullptr) {
+
+	}
+};
+
+struct LinkedList {
+
+	Node *head;
+	Node *tail;
+	int length;
+
+	LinkedList() :
+			head(nullptr), tail(nullptr), length(0) {
+	}
+
+	void insert_end(int value) {
+		Node *item = new Node(value);
+		if (!head)
+			head = tail = item;
+		else {
+			tail->next = item;
+			tail = item;
+		}
+		length++;
+	}
+
+	void add_num(LinkedList &another) {
+
+		if (!another.length)
+			return;
+		else if (!length) {
+			head = another.head;
+			tail = another.tail;
+			length = another.length;
+		} else {
+			Node *th = head;
+			Node *anoth = another.head;
+
+			while (th && anoth) {
+
+				th->data += anoth->data;
+
+				if (!anoth->next) {
+					return;
+				}
+				if (!th->next) {
+					th->next = anoth->next;
+					tail = another.tail;
+					length = another.length;
+					return;
+				}
+				th = th->next;
+				anoth = anoth->next;
+			}
+		}
+	}
+
+	void print() {
+		for (Node *cur = head; cur; cur = cur->next)
+			cout << cur->data;
+		cout << "\n";
+	}
+
+};
+
+int main() {
+
+	int k;
+	while (cin >> k && k > 0) {
+		map<set<int>, int> mp;
+		while (k--) {
+
+			set<int> st;
+			for (int i = 0; i < 5; ++i) {
+				int course;
+				cin >> course;
+				st.insert(course);
+			}
+
+			mp[st]++;
+		}
+
+		int cnt = -1;
+		int res = 0;
+		for (pair<set<int>, int> p : mp) {
+			if (cnt < p.second) {
+				cnt = p.second;
+				res = p.second;
+			}
+			else if(cnt == p.second)
+				res += p.second;
+		}
+
+		cout << res << "\n";
+	}
+	return 0;
+}
+
