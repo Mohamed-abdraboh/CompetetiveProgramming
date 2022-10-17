@@ -1,0 +1,82 @@
+#include<iostream>
+#include<sstream>
+#include<algorithm>
+#include<stack>
+#include<queue>
+#include<vector>
+#include<bitset>
+#include<set>
+#include<map>
+#include<assert.h>
+using namespace std;
+#define cyan  ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+
+enum data {
+	Stack, Queue, Prority_queue, not_sure, Impossible
+};
+
+int t;
+data guess() {
+
+	priority_queue<int> pq;
+	queue<int> q;
+	stack<int> stk;
+
+	bool is_stk = true, is_q = true, is_pq = true;
+	while (t--) {
+		int first, second;
+		cin >> first >> second;
+		if (first == 1)
+			pq.push(second), q.push(second), stk.push(second);
+
+		else if (first == 2) {
+			int val = second;
+			if (!stk.empty() && stk.top() == val && is_stk)
+				stk.pop();
+			else
+				is_stk = false;
+//			cout<<val<<" "<<q.front()<<"\n";
+			if (!q.empty() && q.front() == val && is_q) {
+				q.pop();
+			} else
+				is_q = false;
+			if (!pq.empty() && pq.top() == val && is_pq)
+				pq.pop();
+			else
+				is_pq = false;
+		}
+	}
+	if (is_pq + is_q + is_stk > 1)
+		return not_sure;
+	else if (is_pq)
+		return Prority_queue;
+	else if (is_q)
+		return Queue;
+	else if (is_stk)
+		return Stack;
+	else
+		return Impossible;
+}
+
+int main() {
+
+	while (cin >> t) {
+
+		data d = guess();
+
+		if (d == not_sure)
+			cout << "not sure";
+		else if (d == Queue)
+			cout << "queue";
+		else if (d == Stack)
+			cout << "stack";
+		else if (d == Prority_queue)
+			cout << "priority queue";
+		else
+			cout << "impossible";
+
+		cout << "\n";
+	}
+	return 0;
+}
+
