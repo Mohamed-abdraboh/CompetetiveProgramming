@@ -1,0 +1,58 @@
+#include<iostream>
+#include<sstream>
+#include<algorithm>
+#include<stack>
+#include<queue>
+#include<vector>
+#include<bitset>
+#include<set>
+#include<map>
+#include<assert.h>
+using namespace std;
+#define cyan  ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+#define lp(i , n) for(int i=0; i<n; ++i)
+const int MX = 1e6 + 1;
+int main() {
+
+	int d, n;
+	cin >> d >> n;
+
+	map<string, int> mp;
+	lp(i , d)
+	{
+		string str;
+		int val;
+		cin >> str >> val;
+
+		mp[str] = val;
+	}
+
+	lp(i , n)
+	{
+		int res = 0;
+		string str;
+		while (getline(cin, str) && str != ".") {
+
+			str += " ";
+			string word = "";
+
+			lp(j , (int)str.size())
+			{
+
+				if (str[j] == ' ') {
+					if (mp.count(word))
+						res += mp[word];
+					word = "";
+					continue;
+				}
+
+				word += str[j];
+			}
+
+		}
+		cout << res << "\n";
+	}
+
+	return 0;
+}
+
