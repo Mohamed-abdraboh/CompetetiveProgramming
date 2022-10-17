@@ -1,0 +1,50 @@
+#include<iostream>
+#include<sstream>
+#include<algorithm>
+#include<stack>
+#include<queue>
+#include<vector>
+#include<bitset>
+#include<set>
+#include<map>
+#include<assert.h>
+using namespace std;
+#define cyan  ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+#define lp(i , n) for(int i=0; i<n; ++i)
+const int MX = 1e6 + 1;
+int main() {
+
+	int n, m;
+
+	while (cin >> n && n != 0) {
+		map<int, int> mp;
+		cin >> m;
+
+		lp(i , n)
+		{
+			int val;
+			cin >> val;
+			mp[val] = 1;
+		}
+		lp(i , m)
+		{
+			int val;
+			cin >> val;
+			if (mp.count(val))
+				mp[val]++;
+			else
+				mp[val] = 1;
+		}
+
+		int mx = max(n, m);
+		int res = 0;
+		for (auto p : mp)
+			if (p.second > 1)
+				res++;
+
+		cout << res << "\n";
+
+	}
+	return 0;
+}
+
