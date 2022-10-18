@@ -1,0 +1,77 @@
+#include<iostream>
+#include<sstream>
+#include<algorithm>
+#include<stack>
+#include<queue>
+#include<vector>
+#include<bitset>
+#include<set>
+#include<map>
+#include<assert.h>
+using namespace std;
+#define cyan  ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+#define lp(i , n) for(int i=0; i<n; ++i)
+const int MX = 1e6 + 1;
+int main() {
+
+	string in;
+
+	map<string, int> mp;
+	string word = "";
+	int cnt = 0;
+
+	for (char a = 'a'; a <= 'z'; ++a) {
+		cnt++;
+		word = a;
+		mp[word] = cnt;
+	}
+
+	for (char a = 'a'; a <= 'z'; ++a)
+		for (char b = a + 1; b <= 'z'; ++b) {
+			cnt++;
+			word = a;
+			word += b;
+//			cout<<word<<"\n";
+			mp[word] = cnt;
+		}
+
+	for (char a = 'a'; a <= 'z'; ++a)
+		for (char b = a + 1; b <= 'z'; ++b)
+			for (char c = b + 1; c <= 'z'; ++c) {
+				cnt++;
+				word = a;
+				word += b;
+				word += c;
+				mp[word] = cnt;
+			}
+
+	for (char a = 'a'; a <= 'z'; ++a)
+		for (char b = a + 1; b <= 'z'; ++b)
+			for (char c = b + 1; c <= 'z'; ++c)
+				for (char d = c + 1; d <= 'z'; ++d) {
+					cnt++;
+					word = a;
+					word += b;
+					word += c;
+					word += d;
+					mp[word] = cnt;
+				}
+
+	for (char a = 'a'; a <= 'z'; ++a)
+		for (char b = a + 1; b <= 'z'; ++b)
+			for (char c = b + 1; c <= 'z'; ++c)
+				for (char d = c + 1; d <= 'z'; ++d)
+					for (char e = d + 1; e <= 'z'; ++e) {
+						cnt++;
+						word = a;
+						word += b;
+						word += c;
+						word += d;
+						word += e;
+						mp[word] = cnt;
+					}
+	while (cin >> in)
+		cout << mp[in] << "\n";
+	return 0;
+}
+
