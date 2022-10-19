@@ -12,66 +12,38 @@ using namespace std;
 #define cyan  ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
 #define lp(i , n) for(int i=0; i<n; ++i)
 const int MX = 1e6 + 1;
-int main() {
 
-	string in;
+map<string, int> mp;
+int cnt = 1;
 
-	map<string, int> mp;
-	string word = "";
-	int cnt = 0;
+void enumerateStrings(string s, unsigned int len) {
 
-	for (char a = 'a'; a <= 'z'; ++a) {
-		cnt++;
-		word = a;
-		mp[word] = cnt;
+	if (s.size() == len) {
+		mp[s] = cnt++;
+		return;
 	}
 
-	for (char a = 'a'; a <= 'z'; ++a)
-		for (char b = a + 1; b <= 'z'; ++b) {
-			cnt++;
-			word = a;
-			word += b;
-//			cout<<word<<"\n";
-			mp[word] = cnt;
-		}
+	char lastLetter;
 
-	for (char a = 'a'; a <= 'z'; ++a)
-		for (char b = a + 1; b <= 'z'; ++b)
-			for (char c = b + 1; c <= 'z'; ++c) {
-				cnt++;
-				word = a;
-				word += b;
-				word += c;
-				mp[word] = cnt;
-			}
+	if (s.empty())
+		lastLetter = 'a';
+	else
+		lastLetter = s[s.size() - 1] + 1;
 
-	for (char a = 'a'; a <= 'z'; ++a)
-		for (char b = a + 1; b <= 'z'; ++b)
-			for (char c = b + 1; c <= 'z'; ++c)
-				for (char d = c + 1; d <= 'z'; ++d) {
-					cnt++;
-					word = a;
-					word += b;
-					word += c;
-					word += d;
-					mp[word] = cnt;
-				}
+	for (char c = lastLetter; c <= 'z'; ++c)
+		enumerateStrings(s + c, len);
 
-	for (char a = 'a'; a <= 'z'; ++a)
-		for (char b = a + 1; b <= 'z'; ++b)
-			for (char c = b + 1; c <= 'z'; ++c)
-				for (char d = c + 1; d <= 'z'; ++d)
-					for (char e = d + 1; e <= 'z'; ++e) {
-						cnt++;
-						word = a;
-						word += b;
-						word += c;
-						word += d;
-						word += e;
-						mp[word] = cnt;
-					}
-	while (cin >> in)
-		cout << mp[in] << "\n";
+}
+
+int main() {
+
+	for (unsigned int len = 1; len <= 5; ++len)
+		enumerateStrings("", len);
+
+	string word;
+	while (cin >> word)
+		cout << mp[word] << "\n";
+
 	return 0;
 }
 
